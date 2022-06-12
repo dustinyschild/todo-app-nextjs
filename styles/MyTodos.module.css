@@ -140,7 +140,13 @@
   color: green;
 }
 
-.todoItemButtonGroup button.completed {
+.completed .todoItem dt,
+.completed .todoItem dd {
+  text-decoration: line-through;
+  color: #767676;
+}
+
+.completed button.complete {
   /* move this up to todoItemContainer */
   visibility: hidden;
 }

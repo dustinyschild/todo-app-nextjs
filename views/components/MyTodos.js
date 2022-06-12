@@ -53,7 +53,12 @@ const MyTodos = () => {
       </form>
       <dl className={styles.todoList}>
         {items.map((item, idx) => (
-          <div key={idx} className={styles.todoItemContainer}>
+          <div
+            key={idx}
+            className={`${styles.todoItemContainer} ${
+              item.completed ? styles.completed : ""
+            }`}
+          >
             <div className={styles.todoItem}>
               <dt>{item.name}</dt>
               <dd>{item.description}</dd>
