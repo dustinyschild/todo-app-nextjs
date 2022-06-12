@@ -1,16 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "../../styles/MyTodos.module.css";
 
 const MyTodos = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
-  useEffect(() => {
-    console.log({ name, description });
-  }, [name, description]);
-
   const addItem = (e) => {
     e.preventDefault();
+
     const items = JSON.parse(localStorage.getItem("myTodos")) || [];
 
     items.push({ name, description, completed: false });
@@ -45,7 +42,9 @@ const MyTodos = () => {
             />
           </div>
         </div>
-        <button type="submit">Add Todo</button>
+        <div className={styles.buttonGroup}>
+          <button type="submit">Add Todo</button>
+        </div>
       </form>
     </div>
   );
