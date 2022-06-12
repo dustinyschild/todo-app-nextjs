@@ -3,6 +3,7 @@
 ---------------------------------
   outer-background #DBDBDB
   inner-background #333333
+  inner-inner-background #444444
   yellow #74C6A6
   green ??
   red ??
@@ -19,6 +20,10 @@
 }
 
 .main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   background-color: #333333;
   height: 80vh;
   min-width: 1100px;
