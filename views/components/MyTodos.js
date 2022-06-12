@@ -46,6 +46,29 @@ const MyTodos = () => {
           <button type="submit">Add Todo</button>
         </div>
       </form>
+      <dl className={styles.todoList}>
+        <div className={styles.todoItemContainer}>
+          <div className={styles.todoItem}>
+            <dt>Todo Title</dt>
+            <dd>Todo description</dd>
+          </div>
+          <div className={styles.todoItemButtonGroup}>
+            <button className={styles.complete}>Complete</button>
+            <button className={styles.delete}>Delete</button>
+          </div>
+        </div>
+
+        <div className={styles.todoItemContainer}>
+          <div className={styles.todoItem}>
+            <dt>Todo Title</dt>
+            <dd>Todo description</dd>
+          </div>
+          <div className={styles.todoItemButtonGroup}>
+            <button className={styles.complete}>Complete</button>
+            <button className={styles.delete}>Delete</button>
+          </div>
+        </div>
+      </dl>
     </div>
   );
 };
