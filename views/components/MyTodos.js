@@ -1,22 +1,27 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../../styles/MyTodos.module.css";
+import useLocalStorage from "./hooks/useLocalStorage";
 
 const MyTodos = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [items, storage] = useLocalStorage("myTodos");
 
   const addItem = (e) => {
     e.preventDefault();
 
-    const items = JSON.parse(localStorage.getItem("myTodos")) || [];
-
-    items.push({ name, description, completed: false });
-
-    localStorage.setItem("myTodos", JSON.stringify(items));
-    console.log(items);
+    storage.addItem({ name, description, completed: false });
 
     setName("");
     setDescription("");
+  };
+
+  const completeItem = (id) => () => {
+    storage.completeItem(id);
+  };
+
+  const deleteItem = (id) => () => {
+    storage.deleteItem(id);
   };
 
   return (
@@ -47,27 +52,27 @@ const MyTodos = () => {
         </div>
       </form>
       <dl className={styles.todoList}>
-        <div className={styles.todoItemContainer}>
-          <div className={styles.todoItem}>
-            <dt>Todo Title</dt>
-            <dd>Todo description</dd>
+        {items.map((item, idx) => (
+          <div key={idx} className={styles.todoItemContainer}>
+            <div className={styles.todoItem}>
+              <dt>{item.name}</dt>
+              <dd>{item.description}</dd>
+            </div>
+            <div className={styles.todoItemButtonGroup}>
+              <button
+                onClick={completeItem(idx)}
+                className={`${styles.complete} ${
+                  item.completed ? styles.completed : ""
+                }`}
+              >
+                Complete
+              </button>
+              <button onClick={deleteItem(idx)} className={styles.delete}>
+                Delete
+              </button>
+            </div>
           </div>
-          <div className={styles.todoItemButtonGroup}>
-            <button className={styles.complete}>Complete</button>
-            <button className={styles.delete}>Delete</button>
-          </div>
-        </div>
-
-        <div className={styles.todoItemContainer}>
-          <div className={styles.todoItem}>
-            <dt>Todo Title</dt>
-            <dd>Todo description</dd>
-          </div>
-          <div className={styles.todoItemButtonGroup}>
-            <button className={styles.complete}>Complete</button>
-            <button className={styles.delete}>Delete</button>
-          </div>
-        </div>
+        ))}
       </dl>
     </div>
   );
