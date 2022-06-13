@@ -3,11 +3,11 @@ import styles from "../../styles/MyTodos.module.css";
 import useLocalStorage from "./hooks/useLocalStorage";
 
 const MyTodos = () => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
   const [items, storage] = useLocalStorage("myTodos");
 
-  const addItem = (e) => {
+  const addItem = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     storage.addItem({ name, description, completed: false });
@@ -16,11 +16,11 @@ const MyTodos = () => {
     setDescription("");
   };
 
-  const completeItem = (id) => () => {
+  const completeItem = (id: number) => () => {
     storage.completeItem(id);
   };
 
-  const deleteItem = (id) => () => {
+  const deleteItem = (id: number) => () => {
     storage.deleteItem(id);
   };
 

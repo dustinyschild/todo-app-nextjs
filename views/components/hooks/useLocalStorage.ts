@@ -1,5 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 
+type LocalStorage<T> = {
+  addItem: (item: T) => void
+  completeItem: (id: number) => void
+  deleteItem: (id: number) => void
+}
+
 type TodoItem = {
   name: string
   description: string
@@ -7,9 +13,11 @@ type TodoItem = {
 }
 
 
-const useLocalStorage = (storageName: string) => {
+const useLocalStorage = (storageName: string):
+  [TodoItem[], LocalStorage<TodoItem>] => {
   const [items, setItems] = useState<TodoItem[]>([]);
 
+  // load items into state
   useEffect(() => {
     const storageItems: TodoItem[] = JSON.parse(localStorage.getItem(storageName)) || [];
 
@@ -18,32 +26,23 @@ const useLocalStorage = (storageName: string) => {
 
   const actions = {
     addItem: (item: TodoItem) => {
-      items.push(item);
+      const newItems = [...items, item];
 
-      setItems(items)
-      localStorage.setItem(storageName, JSON.stringify(items));
+      setItems(newItems);
+      localStorage.setItem(storageName, JSON.stringify(newItems));
     },
     completeItem: (id: number) => {
-      const updatedItems = items.map((item, idx) => {
-        if (idx === id) {
-          const newItem = {...item, completed: true}
-          return newItem;
-        }
+      const updatedItems = items.map((item: TodoItem, idx) => ({...item, completed: idx === id}));
 
-        return item;
-      });
-
-      setItems(updatedItems)
-      localStorage.setItem(storageName, JSON.stringify(updatedItems))
+      setItems(updatedItems);
+      localStorage.setItem(storageName, JSON.stringify(updatedItems));
     },
     deleteItem: (id: number) => {
-      const filteredList = items.filter((item, idx) => idx !== id)
+      const filteredList = items.filter((item, idx) => idx !== id);
       setItems(filteredList);
-      localStorage.setItem(storageName, JSON.stringify(filteredList))
+      localStorage.setItem(storageName, JSON.stringify(filteredList));
     },
   };
-
-  console.log(items);
 
   return [items, actions];
 };
