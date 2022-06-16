@@ -1,4 +1,4 @@
-import { isBrowser } from "../utils";
+import { isBrowser } from "../../utils";
 
 interface ILocalStorage {
   getItem(key: string): string | null;
@@ -6,7 +6,7 @@ interface ILocalStorage {
   removeItem(key: string): void;
 }
 
-type LocalStorageKey = "access_token" | "refresh_token" | "my_todos";
+export type LocalStorageKey = "access_token" | "refresh_token" | "my_todos";
 
 export abstract class LocalStorage<LocalStorageKey extends string, T> {
   private readonly storage: ILocalStorage;
