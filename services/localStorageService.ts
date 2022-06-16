@@ -27,7 +27,7 @@ abstract class LocalStorage<LocalStorageKey extends string, T> {
     this.storage?.setItem(key, JSON.stringify(value)); // should be safe since the input type is defined
   }
 
-  protected clearItem(key: LocalStorageKey): void {
+  protected clear(key: LocalStorageKey): void {
     this.storage?.removeItem(key);
   }
 }
@@ -55,7 +55,7 @@ export default class StorageService<T> extends LocalStorage<
     this.set(this.key, data);
   }
 
-  public clear() {
-    this.clearItem(this.key);
+  public clearData() {
+    this.clear(this.key);
   }
 }
