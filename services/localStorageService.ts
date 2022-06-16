@@ -55,6 +55,3 @@ export default class StorageService<T> extends LocalStorage<
     this.clearItem(this.key);
   }
 }
-
-const myTodos = new StorageService("my_todos");
-console.log(myTodos.getData());

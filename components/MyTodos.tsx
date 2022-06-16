@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import styles from "../../styles/MyTodos.module.css";
+import styles from "../styles/MyTodos.module.css";
 import useTodosStorage from "../hooks/useTodosStorage";
 
 const MyTodos = () => {

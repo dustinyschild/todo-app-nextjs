@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import StorageService from "../../services/localStorageService";
-import { isBrowser } from "../../utils";
+import StorageService from "../services/localStorageService";
+import { isBrowser } from "../utils";
 
 export type TodoItem = {
   name: string;
@@ -15,7 +15,6 @@ type TodoItemActions<S> = {
 };
 
 const myTodosService = new StorageService<TodoItem[]>("my_todos");
-console.log(myTodosService.getData());
 
 const useTodosStorage = (): [TodoItem[], TodoItemActions<TodoItem>] => {
   const [items, setItems] = useState<TodoItem[]>([]);
