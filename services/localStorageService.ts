@@ -43,6 +43,10 @@ export default class StorageService<T> extends LocalStorage<
     this.key = key;
   }
 
+  public initializeData(defaultValue: T) {
+    this.setData(defaultValue);
+  }
+
   public getData() {
     return this.get(this.key);
   }

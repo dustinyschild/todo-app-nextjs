@@ -14,10 +14,16 @@ type TodoItemActions<S> = {
   deleteItem: (id: number) => void;
 };
 
+const defaultValue = [];
+
 const myTodosService = new StorageService<TodoItem[]>("my_todos");
 
+if (isBrowser() && myTodosService.getData() === null) {
+  myTodosService.initializeData(defaultValue);
+}
+
 const useTodosStorage = (): [TodoItem[], TodoItemActions<TodoItem>] => {
-  const [items, setItems] = useState<TodoItem[]>([]);
+  const [items, setItems] = useState<TodoItem[]>(defaultValue);
 
   useEffect(() => {
     if (isBrowser()) {
