@@ -1,6 +1,6 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import MyTodos from "../views/components/MyTodos";
+import MyTodos from "../components/MyTodos";
 
 export default function Home() {
   return (
