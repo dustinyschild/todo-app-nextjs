@@ -1,0 +1,15 @@
+version: '3.1'
+
+services:
+  postgres:
+    container_name: todo_db
+    image: postgres@latest
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=p@ssw0rd
+      - POSTGRES_DB=todo
+    volumes:
+      - ./local_pg_data:/var/lib/postgresql/data
