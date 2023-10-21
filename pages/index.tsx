@@ -17,7 +17,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header>
-        <UserButton afterSignOutUrl="/login" />
+        <UserButton
+          afterSignOutUrl={process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL}
+        />
       </header>
       <main className={styles.main}>
         <MyTodos />
