@@ -1,27 +1,35 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../styles/MyTodos.module.css";
 import useTodosStorage from "../hooks/useTodosStorage";
+import { useTodos } from "../hooks/useTodos.1";
+import { Todo } from "../pages/api/todo";
 
 const MyTodos = () => {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+
   const [items, storage] = useTodosStorage();
+  const { todos, getTodos, createTodo, completeTodo, deleteTodo } = useTodos();
+
+  useEffect(() => {
+    getTodos();
+  }, [getTodos]);
 
   const addItem = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    storage.addItem({ name, description, completed: false });
+    createTodo({ title: name, description });
 
     setName("");
     setDescription("");
   };
 
-  const completeItem = (id: number) => () => {
-    storage.completeItem(id);
+  const completeItem = (todo: Todo) => () => {
+    completeTodo(todo);
   };
 
-  const deleteItem = (id: number) => () => {
-    storage.deleteItem(id);
+  const deleteItem = (todo: Todo) => () => {
+    deleteTodo(todo);
   };
 
   return (
@@ -52,27 +60,27 @@ const MyTodos = () => {
         </div>
       </form>
       <dl className={styles.todoList}>
-        {items.map((item, idx) => (
+        {todos?.map((todo) => (
           <div
-            key={idx}
+            key={todo.id}
             className={`${styles.todoItemContainer} ${
-              item.completed ? styles.completed : ""
+              todo.isCompleted ? styles.completed : ""
             }`}
           >
             <div className={styles.todoItem}>
-              <dt>{item.name}</dt>
-              <dd>{item.description}</dd>
+              <dt>{todo.title}</dt>
+              <dd>{todo.description}</dd>
             </div>
             <div className={styles.todoItemButtonGroup}>
               <button
-                onClick={completeItem(idx)}
+                onClick={completeItem(todo)}
                 className={`${styles.complete} ${
-                  item.completed ? styles.completed : ""
+                  todo.isCompleted ? styles.completed : ""
                 }`}
               >
                 Complete
               </button>
-              <button onClick={deleteItem(idx)} className={styles.delete}>
+              <button onClick={deleteItem(todo)} className={styles.delete}>
                 Delete
               </button>
             </div>
