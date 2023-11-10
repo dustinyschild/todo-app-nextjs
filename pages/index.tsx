@@ -1,12 +1,21 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import styles from "../styles/Home.module.css";
 import MyTodos from "../components/MyTodos";
 import { UserButton } from "@clerk/nextjs";
 import { useAuth } from "@clerk/nextjs";
 
 export default function Home() {
-  const { isLoaded, userId, sessionId } = useAuth();
-  console.log({ isLoaded, userId, sessionId });
+  const { isLoaded, sessionId } = useAuth();
+  const { push } = useRouter();
+
+  if (!isLoaded) {
+    return <>Loading...</>;
+  }
+
+  if (isLoaded && !sessionId) {
+    return push("/signin");
+  }
 
   return (
     <div className={styles.container}>
